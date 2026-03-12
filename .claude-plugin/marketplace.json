@@ -1,0 +1,29 @@
+{
+  "name": "argonavis-labs",
+  "owner": {
+    "name": "Argonavis Labs"
+  },
+  "metadata": {
+    "description": "Argonavis Labs plugins for Claude Code.",
+    "version": "1.1.0"
+  },
+  "plugins": [
+    {
+      "name": "spectacula",
+      "source": "./",
+      "description": "Spec-first planning, lifecycle tracking, and implementation workflow for Claude Code and Codex.",
+      "version": "1.1.0",
+      "author": {
+        "name": "Argonavis Labs"
+      },
+      "homepage": "https://github.com/argonavis-labs/spectacula",
+      "repository": "https://github.com/argonavis-labs/spectacula",
+      "category": "development",
+      "tags": [
+        "specs",
+        "planning",
+        "workflow"
+      ]
+    }
+  ]
+}

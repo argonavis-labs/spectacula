@@ -35,6 +35,7 @@ agents/
   spectacula-status.md
 .claude-plugin/
   plugin.json
+  marketplace.json
 skills/
   spectacula/
     SKILL.md
@@ -119,16 +120,14 @@ When you want to steer the result more explicitly, add one of these suffixes:
 - `Audit every spec against the current Spectacula quality bar`
 - `Upgrade this spec in place to match the Attractor-style reference quality`
 
-## Install For Codex
+## Install And Upgrade In Codex
 
-Option 1: copy or symlink the skill folder into `~/.codex/skills/`:
+Recommended Codex install modes:
 
-```bash
-mkdir -p ~/.codex/skills
-ln -s "$(pwd)" ~/.codex/skills/spectacula
-```
+- regular users: install from GitHub with the built-in Codex skill installer
+- local development: symlink the repo into `~/.codex/skills`
 
-Option 2: install from GitHub after publishing:
+Best-practice install for normal use:
 
 ```bash
 python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-github.py \
@@ -137,11 +136,41 @@ python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-githu
   --name spectacula
 ```
 
-Restart Codex after installing or updating the skill.
+Best-practice install for local development on this repo:
+
+```bash
+mkdir -p ~/.codex/skills
+ln -s /absolute/path/to/spectacula ~/.codex/skills/spectacula
+```
+
+Upgrade if you installed with a symlink:
+
+```bash
+cd /absolute/path/to/spectacula
+git pull
+```
+
+Upgrade if you installed a copied snapshot from GitHub:
+
+```bash
+rm -rf ~/.codex/skills/spectacula
+python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-github.py \
+  --repo argonavis-labs/spectacula \
+  --path . \
+  --name spectacula
+```
+
+After any install or upgrade, restart Codex so it reloads the skill.
 
 Codex entrypoint:
 
 - [SKILL.md](./SKILL.md)
+
+Codex invocation:
+
+```text
+$spectacula <your idea>
+```
 
 Important:
 
@@ -149,20 +178,58 @@ Important:
 - Live specs should be stored in the user's active project repo under `docs/spectacula`.
 - Use the bootstrap script or copy the template into the target repo before first use.
 
-## Use With Claude
+## Install And Upgrade In Claude
 
-Spectacula now supports Claude Code as a real plugin, not just a pasted prompt.
+Official Claude best practice is:
 
-Local development and testing:
+- use a plugin marketplace for shared installs and updates
+- use `--plugin-dir` only for local development and testing
 
-```bash
-claude --plugin-dir .
+This repo now includes a marketplace manifest at [.claude-plugin/marketplace.json](./.claude-plugin/marketplace.json), so you can install it with Claude's marketplace flow.
+
+Best-practice install from GitHub:
+
+```text
+/plugin marketplace add argonavis-labs/spectacula
+/plugin install spectacula@argonavis-labs
 ```
 
-Then invoke the skill as:
+Choose installation scope through the `/plugin` UI if you want `user`, `project`, or `local` scope explicitly. The CLI form also works:
+
+```bash
+claude plugin install spectacula@argonavis-labs --scope project
+```
+
+Best-practice upgrade from the marketplace:
+
+```text
+/plugin marketplace update argonavis-labs
+/reload-plugins
+```
+
+Notes:
+
+- third-party marketplaces have auto-update disabled by default in Claude; enable it in `/plugin` -> `Marketplaces` if you want automatic updates at startup
+- if Claude reports that a restart is required after plugin changes, restart Claude Code
+- Spectacula currently ships skills and agents, not LSP servers, so `/reload-plugins` is normally enough
+
+Best-practice local development flow:
+
+```bash
+claude --plugin-dir /absolute/path/to/spectacula
+```
+
+Then invoke the plugin as:
 
 ```text
 /spectacula:spectacula
+```
+
+If you are using `--plugin-dir`, upgrading is just updating the local repo and restarting or rerunning Claude:
+
+```bash
+cd /absolute/path/to/spectacula
+git pull
 ```
 
 You can still copy the prompt from [references/claude-portable-prompt.md](./references/claude-portable-prompt.md) into Claude project instructions or an agent definition when a plugin is not available.
@@ -172,6 +239,7 @@ Keep using the same `docs/spectacula` directory contract so Codex and Claude sha
 Plugin files:
 
 - Manifest: [.claude-plugin/plugin.json](./.claude-plugin/plugin.json)
+- Marketplace: [.claude-plugin/marketplace.json](./.claude-plugin/marketplace.json)
 - Skill: [skills/spectacula/SKILL.md](./skills/spectacula/SKILL.md)
 - Subagents: [agents](./agents)
 
@@ -206,7 +274,7 @@ Agent teams are experimental and must be enabled first. Add this to Claude `sett
 Then start Claude with the plugin:
 
 ```bash
-claude --plugin-dir .
+claude --plugin-dir /absolute/path/to/spectacula
 ```
 
 Example team prompt:

@@ -1,6 +1,6 @@
 {
   "name": "spectacula",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Spec-first planning, lifecycle tracking, and implementation workflow for Claude Code and Codex.",
   "author": {
     "name": "Argonavis Labs"
