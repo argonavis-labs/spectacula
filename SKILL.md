@@ -52,6 +52,8 @@ Turn a vague request into a concrete specification in this order: frame the prob
 
 ## Manage Spectacula State
 
+- Always store live specs in the user's current working repository, not in the installed skill directory.
+- If `docs/spectacula` does not exist in the current working repo, bootstrap it with [scripts/bootstrap_repo.py](./scripts/bootstrap_repo.py) or copy [assets/repo-template/docs/spectacula](./assets/repo-template/docs/spectacula) into the repo.
 - Store canonical specs in `docs/spectacula/specs/<slug>.md`.
 - Keep exactly one active stage manifest per spec as `docs/spectacula/<stage>/<slug>.json`.
 - Use stages `specs`, `ready`, `inprogress`, and `done`.
@@ -89,6 +91,7 @@ Turn a vague request into a concrete specification in this order: frame the prob
 - Use [question-bank.md](./references/question-bank.md) to select the smallest set of clarifying questions that materially affects the spec.
 - Use [implementation-handoff.md](./references/implementation-handoff.md) when the task transitions from planning/specification into coding.
 - Use [spectacula-lifecycle.md](./references/spectacula-lifecycle.md) when storing or tracking specs in `docs/spectacula`.
+- Use [scripts/bootstrap_repo.py](./scripts/bootstrap_repo.py) or [assets/repo-template/docs/spectacula](./assets/repo-template/docs/spectacula) to scaffold `docs/spectacula` into the user's working repo.
 - Use [claude-portable-prompt.md](./references/claude-portable-prompt.md) when adapting this skill for Claude project instructions or a Claude agent prompt.
 
 This skill is intentionally prompt-first and portable. The Codex skill is the source of truth; the Claude prompt reference keeps the same workflow and quality bar when you need the same behavior in Claude.

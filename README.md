@@ -6,7 +6,7 @@ It combines:
 
 - a reusable Codex skill at the repository root
 - a Claude-compatible prompt reference
-- a repository-native spec lifecycle under `docs/spectacula`
+- a bootstrap template for creating `docs/spectacula` inside a user's working repository
 
 The goal is to take a rough idea, turn it into a rigorous specification, track the work through approval and implementation, preserve resume context if execution is interrupted, and answer status questions from structured metadata.
 
@@ -17,16 +17,11 @@ SKILL.md
 agents/
   openai.yaml
 references/
-
-docs/
-  spectacula/
-    README.md
-    templates/
-    examples/
-    specs/
-    ready/
-    inprogress/
-    done/
+scripts/
+assets/
+  repo-template/
+    docs/
+      spectacula/
 ```
 
 ## What The Skill Does
@@ -47,6 +42,8 @@ Primary files:
 - Skill instructions: [SKILL.md](./SKILL.md)
 - Claude prompt: [references/claude-portable-prompt.md](./references/claude-portable-prompt.md)
 - Lifecycle contract: [references/spectacula-lifecycle.md](./references/spectacula-lifecycle.md)
+- Bootstrap script: [scripts/bootstrap_repo.py](./scripts/bootstrap_repo.py)
+- Bootstrap template: [assets/repo-template/docs/spectacula](./assets/repo-template/docs/spectacula)
 
 ## Install For Codex
 
@@ -68,11 +65,42 @@ python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-githu
 
 Restart Codex after installing or updating the skill.
 
+Important:
+
+- Installing the skill does not make this repository the home for your live specs.
+- Live specs should be stored in the user's active project repo under `docs/spectacula`.
+- Use the bootstrap script or copy the template into the target repo before first use.
+
 ## Use With Claude
 
 Copy the prompt from [references/claude-portable-prompt.md](./references/claude-portable-prompt.md) into Claude project instructions or an agent definition.
 
 Keep using the same `docs/spectacula` directory contract so Codex and Claude share the same source of truth.
+
+## Bootstrap A User Repo
+
+Create the working `docs/spectacula` tree in a user repo with:
+
+```bash
+python3 ~/.codex/skills/spectacula/scripts/bootstrap_repo.py /path/to/project-repo
+```
+
+If already inside the target repo:
+
+```bash
+python3 ~/.codex/skills/spectacula/scripts/bootstrap_repo.py .
+```
+
+This creates:
+
+- `docs/spectacula/specs`
+- `docs/spectacula/ready`
+- `docs/spectacula/inprogress`
+- `docs/spectacula/done`
+- `docs/spectacula/templates`
+- `docs/spectacula/README.md`
+
+Use `--include-examples` if you also want sample files copied into the target repo.
 
 ## Spectacula Lifecycle
 
@@ -94,22 +122,25 @@ Rules:
 - Do not duplicate the full spec text in the manifest.
 - Keep enough metadata to answer status questions and resume work.
 
-See [docs/spectacula/README.md](./docs/spectacula/README.md) for the local workflow and [references/spectacula-lifecycle.md](./references/spectacula-lifecycle.md) for the authoritative contract.
+This lifecycle lives in the user's working repo, not in the installed skill directory.
+
+See [assets/repo-template/docs/spectacula/README.md](./assets/repo-template/docs/spectacula/README.md) for the scaffolded local workflow and [references/spectacula-lifecycle.md](./references/spectacula-lifecycle.md) for the authoritative contract.
 
 ## Quick Start
 
-1. Copy [docs/spectacula/templates/spec.template.md](./docs/spectacula/templates/spec.template.md) to `docs/spectacula/specs/<slug>.md`.
-2. Copy [docs/spectacula/templates/manifest.template.json](./docs/spectacula/templates/manifest.template.json) to `docs/spectacula/specs/<slug>.json`.
-3. Use `spectacula` to clarify and draft the spec.
-4. Move the manifest to `ready/` once approved.
-5. Move the manifest to `inprogress/` when implementation starts.
-6. Run verification and final spec review.
-7. Move the manifest to `done/` when the implementation and review are complete.
+1. Run [scripts/bootstrap_repo.py](./scripts/bootstrap_repo.py) against the target repo.
+2. Copy `docs/spectacula/templates/spec.template.md` in that target repo to `docs/spectacula/specs/<slug>.md`.
+3. Copy `docs/spectacula/templates/manifest.template.json` in that target repo to `docs/spectacula/specs/<slug>.json`.
+4. Use `spectacula` to clarify and draft the spec.
+5. Move the manifest to `ready/` once approved.
+6. Move the manifest to `inprogress/` when implementation starts.
+7. Run verification and final spec review.
+8. Move the manifest to `done/` when the implementation and review are complete.
 
 ## Examples And Templates
 
-- Templates: [docs/spectacula/templates](./docs/spectacula/templates)
-- Example spec and manifest: [docs/spectacula/examples](./docs/spectacula/examples)
+- Templates: [assets/repo-template/docs/spectacula/templates](./assets/repo-template/docs/spectacula/templates)
+- Example spec and manifest: [assets/repo-template/docs/spectacula/examples](./assets/repo-template/docs/spectacula/examples)
 
 ## Development
 

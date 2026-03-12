@@ -1,6 +1,6 @@
 # Spectacula Lifecycle
 
-Use this reference when specs are managed in `docs/spectacula`.
+Use this reference when specs are managed in `docs/spectacula` inside the user's working repository.
 
 ## Directory Contract
 
@@ -21,6 +21,7 @@ docs/spectacula/
 
 Rules:
 
+- The active `docs/spectacula` tree belongs in the user's project repo, not in the installed skill directory.
 - `docs/spectacula/specs/<slug>.md` is the canonical spec text.
 - `docs/spectacula/<stage>/<slug>.json` is the stage manifest for the current lifecycle state.
 - Only one manifest for a given `<slug>` should exist across `specs`, `ready`, `inprogress`, and `done` at a time.
