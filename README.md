@@ -4,7 +4,7 @@ Spectacula is a spec-first workflow for Codex and Claude.
 
 It combines:
 
-- a reusable Codex skill at `skills/spectacula`
+- a reusable Codex skill at the repository root
 - a Claude-compatible prompt reference
 - a repository-native spec lifecycle under `docs/spectacula`
 
@@ -13,11 +13,10 @@ The goal is to take a rough idea, turn it into a rigorous specification, track t
 ## Repository Layout
 
 ```text
-skills/
-  spectacula/
-    SKILL.md
-    agents/openai.yaml
-    references/
+SKILL.md
+agents/
+  openai.yaml
+references/
 
 docs/
   spectacula/
@@ -45,9 +44,9 @@ docs/
 
 Primary files:
 
-- Skill instructions: [skills/spectacula/SKILL.md](./skills/spectacula/SKILL.md)
-- Claude prompt: [skills/spectacula/references/claude-portable-prompt.md](./skills/spectacula/references/claude-portable-prompt.md)
-- Lifecycle contract: [skills/spectacula/references/spectacula-lifecycle.md](./skills/spectacula/references/spectacula-lifecycle.md)
+- Skill instructions: [SKILL.md](./SKILL.md)
+- Claude prompt: [references/claude-portable-prompt.md](./references/claude-portable-prompt.md)
+- Lifecycle contract: [references/spectacula-lifecycle.md](./references/spectacula-lifecycle.md)
 
 ## Install For Codex
 
@@ -55,7 +54,7 @@ Option 1: copy or symlink the skill folder into `~/.codex/skills/`:
 
 ```bash
 mkdir -p ~/.codex/skills
-ln -s "$(pwd)/skills/spectacula" ~/.codex/skills/spectacula
+ln -s "$(pwd)" ~/.codex/skills/spectacula
 ```
 
 Option 2: install from GitHub after publishing:
@@ -63,14 +62,15 @@ Option 2: install from GitHub after publishing:
 ```bash
 python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-github.py \
   --repo argonavis-labs/spectacula \
-  --path skills/spectacula
+  --path . \
+  --name spectacula
 ```
 
 Restart Codex after installing or updating the skill.
 
 ## Use With Claude
 
-Copy the prompt from [skills/spectacula/references/claude-portable-prompt.md](./skills/spectacula/references/claude-portable-prompt.md) into Claude project instructions or an agent definition.
+Copy the prompt from [references/claude-portable-prompt.md](./references/claude-portable-prompt.md) into Claude project instructions or an agent definition.
 
 Keep using the same `docs/spectacula` directory contract so Codex and Claude share the same source of truth.
 
@@ -94,7 +94,7 @@ Rules:
 - Do not duplicate the full spec text in the manifest.
 - Keep enough metadata to answer status questions and resume work.
 
-See [docs/spectacula/README.md](./docs/spectacula/README.md) for the local workflow and [skills/spectacula/references/spectacula-lifecycle.md](./skills/spectacula/references/spectacula-lifecycle.md) for the authoritative contract.
+See [docs/spectacula/README.md](./docs/spectacula/README.md) for the local workflow and [references/spectacula-lifecycle.md](./references/spectacula-lifecycle.md) for the authoritative contract.
 
 ## Quick Start
 
@@ -116,5 +116,5 @@ See [docs/spectacula/README.md](./docs/spectacula/README.md) for the local workf
 Validate the skill:
 
 ```bash
-PYTHONPATH=/tmp/skill-creator-deps python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/spectacula
+PYTHONPATH=/tmp/skill-creator-deps python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py .
 ```
