@@ -1,0 +1,56 @@
+{
+  "spec_id": "todo-api",
+  "slug": "todo-api",
+  "title": "Todo API Specification",
+  "stage": "ready",
+  "spec_path": "../specs/todo-api.md",
+  "created_at": "2026-03-12T16:00:00Z",
+  "approved_at": "2026-03-12T16:20:00Z",
+  "updated_at": "2026-03-12T16:20:00Z",
+  "summary": "Spec approved and ready for implementation.",
+  "next_action": "Move manifest to inprogress and implement the API.",
+  "blockers": [],
+  "reference_examples": [],
+  "verification": {
+    "format": "pending",
+    "lint": "pending",
+    "typecheck": "pending",
+    "build": "pending",
+    "tests": "pending",
+    "spec_review": "pending",
+    "notes": ""
+  },
+  "resume_context": {
+    "last_completed_step": "Approved the draft specification.",
+    "pending_steps": [
+      "Implement routes and validation",
+      "Run build and tests",
+      "Review implementation against the spec"
+    ],
+    "open_questions": [],
+    "last_reviewed_sections": [
+      "4. Core Requirements",
+      "5. Proposed Design"
+    ],
+    "artifacts": [
+      "docs/spectacula/specs/todo-api.md"
+    ],
+    "notes": "Example manifest only."
+  },
+  "history": [
+    {
+      "at": "2026-03-12T16:00:00Z",
+      "event": "spec_created",
+      "from_stage": null,
+      "to_stage": "specs",
+      "note": "Initial example draft created."
+    },
+    {
+      "at": "2026-03-12T16:20:00Z",
+      "event": "spec_approved",
+      "from_stage": "specs",
+      "to_stage": "ready",
+      "note": "Example spec approved."
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+---
+name: spectacula
+description: Plan, write, store, track, and implement detailed specifications from rough ideas. Use when Codex needs to take a high-level prompt, do an initial planning pass, ask clarifying questions, write a structured spec, move the work through the `docs/spectacula` lifecycle, preserve resume context across `specs`, `ready`, `inprogress`, and `done`, or answer status questions about active or completed specs.
+---
+
+# Spectacula
+
+Turn a vague request into a concrete specification in this order: frame the problem, plan the document, ask clarifying questions, then write the final spec. When the task continues into delivery, hand off into an implementation loop that builds against the spec and re-checks the result until the build matches the reference.
+
+## Run The Workflow
+
+1. Frame the request
+- Identify the artifact type: product spec, system design, API/interface spec, workflow/process spec, migration plan, or decision memo.
+- Identify the reader: engineer, operator, PM, reviewer, or mixed audience.
+- Extract explicit constraints, success criteria, dependencies, deadlines, and platform limits from the prompt or codebase.
+- Inspect the repo or provided docs before proposing architecture when the request depends on an existing system.
+
+2. Plan before writing
+- Draft a short internal outline: likely sections, missing facts, major decisions, and risks.
+- Choose only the sections that add decision value. Do not emit boilerplate sections that say nothing.
+- Use [spec-blueprint.md](./references/spec-blueprint.md) as the default structure unless the user supplied a format to mirror.
+- Prefer a deeper spec over a broader one. Cut filler first.
+
+3. Ask clarifying questions
+- Ask 3-7 high-leverage questions from [question-bank.md](./references/question-bank.md).
+- Prioritize questions that change scope, interfaces, constraints, acceptance criteria, or rollout decisions.
+- Ask grouped, concrete questions instead of open-ended fishing.
+- Skip questions only when the prompt already contains enough detail to support a defensible spec.
+- If the user says to make reasonable assumptions, proceed and record the assumptions explicitly.
+
+4. Write the spec
+- Match the user's requested format. When the user provides an example spec, mirror its title style, numbered headings, table usage, and appendix/checklist structure.
+- If the user provides multiple example specs, synthesize the shared structure and quality bar instead of copying any single document mechanically.
+- Separate facts, decisions, and assumptions.
+- Make behavior concrete: include inputs, outputs, state, routing rules, failure handling, and validation logic where relevant.
+- Use tables for schemas, attributes, comparison points, and configuration surfaces.
+- Use pseudocode only when it clarifies nontrivial behavior.
+- End with a definition of done, validation matrix, acceptance checks, open questions, or assumption ledger when those artifacts add review value.
+
+5. Close the loop
+- Call out unresolved unknowns instead of hiding them in vague prose.
+- Mark assumptions with enough specificity that another engineer or PM can confirm or reject them.
+- If the user asks for a lighter artifact, compress the spec without dropping the planning, question, and assumption workflow.
+
+6. Move into implementation when requested
+- Treat the completed spec as the reference contract for implementation.
+- Use the implementation-phase handoff in [implementation-handoff.md](./references/implementation-handoff.md) when the user wants code built from the plan.
+- Require an explicit self-check loop: implement, compare against the reference spec, fix gaps, then perform a final review against the same spec.
+- Run available verification gates before the final review: format, lint, typecheck, build, test, or equivalent project-native checks.
+- Fix verification failures before claiming completion unless the user explicitly accepts a blocked state.
+- Do not stop at "implementation done" if the result still misses required behavior from the reference spec.
+
+## Manage Spectacula State
+
+- Store canonical specs in `docs/spectacula/specs/<slug>.md`.
+- Keep exactly one active stage manifest per spec as `docs/spectacula/<stage>/<slug>.json`.
+- Use stages `specs`, `ready`, `inprogress`, and `done`.
+- Do not copy the full spec body into stage manifests. The manifest must point back to the canonical spec in `docs/spectacula/specs`.
+- Move the manifest file between stage directories as work advances. The Markdown spec stays in `docs/spectacula/specs`.
+- Update manifest metadata whenever the stage changes or an important checkpoint is reached, so interrupted work can resume cleanly.
+- Use the Spectacula contract in [spectacula-lifecycle.md](./references/spectacula-lifecycle.md).
+
+## Answer Status Questions
+
+- When the user asks for the status of a spec, inspect `docs/spectacula/specs`, `docs/spectacula/ready`, `docs/spectacula/inprogress`, and `docs/spectacula/done`.
+- Identify the spec by slug, title, or closest matching manifest/spec pair.
+- Report the current stage, summary, blockers, next action, verification status, last update time, and canonical spec path.
+- For interrupted work, use the manifest `resume_context` plus the canonical spec to continue from the last checkpoint instead of starting over.
+
+## Adapt The Spec To The Artifact
+
+- For product or feature specs, emphasize user journeys, scope boundaries, success metrics, dependencies, rollout, and operational ownership.
+- For system or architecture specs, emphasize components, data flow, state transitions, interfaces, failure modes, observability, and test strategy.
+- For workflow or process specs, emphasize roles, triggers, handoffs, approvals, exception paths, and SLAs.
+- For API, schema, or protocol specs, emphasize contracts, invariants, versioning, compatibility, error models, and example payloads.
+
+## Keep The Output Sharp
+
+- Default to Markdown.
+- Use numbered sections for long-form specs.
+- Preserve short preamble metadata such as `Status:` or `Purpose:` when the examples use that pattern.
+- Define terms once and keep names stable across sections.
+- Prefer explicit tradeoffs over generic praise or filler.
+- Avoid repeating the same requirement in multiple sections unless the repetition is intentional and cross-referenced.
+
+## Use The References
+
+- Use [spec-blueprint.md](./references/spec-blueprint.md) to choose and shape the final document structure.
+- Use [question-bank.md](./references/question-bank.md) to select the smallest set of clarifying questions that materially affects the spec.
+- Use [implementation-handoff.md](./references/implementation-handoff.md) when the task transitions from planning/specification into coding.
+- Use [spectacula-lifecycle.md](./references/spectacula-lifecycle.md) when storing or tracking specs in `docs/spectacula`.
+- Use [claude-portable-prompt.md](./references/claude-portable-prompt.md) when adapting this skill for Claude project instructions or a Claude agent prompt.
+
+This skill is intentionally prompt-first and portable. The Codex skill is the source of truth; the Claude prompt reference keeps the same workflow and quality bar when you need the same behavior in Claude.
