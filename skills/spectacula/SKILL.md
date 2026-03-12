@@ -43,6 +43,14 @@ python3 "${CLAUDE_SKILL_DIR}/../../scripts/bootstrap_repo.py" .
 - Move only the manifest between stage directories. Keep the spec Markdown fixed in `docs/spectacula/specs`.
 - Preserve `summary`, `next_action`, `history`, `verification`, and `resume_context` so interrupted work can resume cleanly.
 
+## Use Claude Subagents And Agent Teams
+
+- The plugin ships focused Claude subagents in `agents/` for architecture, implementation, review, and status work.
+- Use subagents for focused work that reports back to the lead.
+- Use Claude agent teams when you need parallel workers that can communicate and coordinate independently.
+- Agent teams are experimental and must be enabled by the user before use.
+- For team patterns and prompts, see [../../references/claude-agent-teams.md](../../references/claude-agent-teams.md).
+
 ## Status Queries
 
 When asked for the status of a spec:
@@ -58,4 +66,5 @@ When asked for the status of a spec:
 - For spec structure guidance, see [../../references/spec-blueprint.md](../../references/spec-blueprint.md)
 - For clarifying-question strategy, see [../../references/question-bank.md](../../references/question-bank.md)
 - For implementation handoff and verification expectations, see [../../references/implementation-handoff.md](../../references/implementation-handoff.md)
+- For Claude parallel-execution guidance, see [../../references/claude-agent-teams.md](../../references/claude-agent-teams.md)
 - For the scaffold copied into user repos, see [../../assets/repo-template/docs/spectacula](../../assets/repo-template/docs/spectacula)

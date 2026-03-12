@@ -6,12 +6,5 @@
     "name": "Argonavis Labs"
   },
   "homepage": "https://github.com/argonavis-labs/spectacula",
-  "repository": "https://github.com/argonavis-labs/spectacula",
-  "keywords": [
-    "claude-code",
-    "codex",
-    "specs",
-    "planning",
-    "workflow"
-  ]
+  "repository": "https://github.com/argonavis-labs/spectacula"
 }

@@ -21,6 +21,7 @@ This repository follows a split that works well across both agent ecosystems:
 - Claude Code uses the plugin manifest at [.claude-plugin/plugin.json](./.claude-plugin/plugin.json) and the plugin skill at [skills/spectacula/SKILL.md](./skills/spectacula/SKILL.md)
 
 The top-level `skills/` directory exists because Claude plugins require that layout. It does not mean this repo contains multiple logical skills.
+The top-level `agents/` directory is shared: `openai.yaml` is Codex-facing metadata, while the Markdown files are Claude Code subagents.
 
 ## Repository Layout
 
@@ -28,6 +29,10 @@ The top-level `skills/` directory exists because Claude plugins require that lay
 SKILL.md
 agents/
   openai.yaml
+  spectacula-architect.md
+  spectacula-implementer.md
+  spectacula-reviewer.md
+  spectacula-status.md
 .claude-plugin/
   plugin.json
 skills/
@@ -58,11 +63,13 @@ Primary files:
 
 - Skill instructions: [SKILL.md](./SKILL.md)
 - Claude prompt: [references/claude-portable-prompt.md](./references/claude-portable-prompt.md)
+- Claude team guidance: [references/claude-agent-teams.md](./references/claude-agent-teams.md)
 - Lifecycle contract: [references/spectacula-lifecycle.md](./references/spectacula-lifecycle.md)
 - Bootstrap script: [scripts/bootstrap_repo.py](./scripts/bootstrap_repo.py)
 - Bootstrap template: [assets/repo-template/docs/spectacula](./assets/repo-template/docs/spectacula)
 - Claude plugin manifest: [.claude-plugin/plugin.json](./.claude-plugin/plugin.json)
 - Claude plugin skill: [skills/spectacula/SKILL.md](./skills/spectacula/SKILL.md)
+- Claude plugin subagents: [agents](./agents)
 
 ## Install For Codex
 
@@ -118,10 +125,49 @@ Plugin files:
 
 - Manifest: [.claude-plugin/plugin.json](./.claude-plugin/plugin.json)
 - Skill: [skills/spectacula/SKILL.md](./skills/spectacula/SKILL.md)
+- Subagents: [agents](./agents)
 
 Claude Code entrypoint:
 
 - `/spectacula:spectacula`
+
+Available Claude plugin subagents:
+
+- `spectacula-architect`
+- `spectacula-implementer`
+- `spectacula-reviewer`
+- `spectacula-status`
+
+### Parallel / Swarm Execution In Claude
+
+Claude's docs distinguish subagents from agent teams:
+
+- use subagents for focused workers that report back to the lead
+- use agent teams when teammates need to communicate and coordinate with each other
+
+Agent teams are experimental and must be enabled first. Add this to Claude `settings.json` or set it in the environment:
+
+```json
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  }
+}
+```
+
+Then start Claude with the plugin:
+
+```bash
+claude --plugin-dir .
+```
+
+Example team prompt:
+
+```text
+Create an agent team for this approved Spectacula spec. Use one spectacula-architect teammate to split the work into safe parallel tasks, two spectacula-implementer teammates for separate workstreams, and one spectacula-reviewer teammate to compare the result against the spec and verification gates. Avoid file conflicts and keep docs/spectacula resume context current.
+```
+
+See [references/claude-agent-teams.md](./references/claude-agent-teams.md) for recommended patterns.
 
 ## Bootstrap A User Repo
 
