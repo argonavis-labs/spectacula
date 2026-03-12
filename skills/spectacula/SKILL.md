@@ -16,6 +16,7 @@ Use Spectacula to turn a vague request into a tracked, implementation-ready spec
 2. Plan before writing
 - Draft a short internal outline with likely sections, missing facts, major decisions, and risks.
 - Match the shape and rigor of any reference specs the user provides.
+- For software, system, workflow, protocol, or implementation-facing feature work, default to a long-form engineering spec unless the user explicitly asks for something lighter.
 
 3. Ask clarifying questions
 - Ask 3-7 high-leverage questions when the request is still ambiguous.
@@ -26,6 +27,8 @@ Use Spectacula to turn a vague request into a tracked, implementation-ready spec
 
 4. Write the spec
 - Produce a structured Markdown spec with concrete behavior, interfaces, failure handling, and validation logic where relevant.
+- Match the depth of any reference spec the user provides. If the example is long-form and RFC-like, produce a long-form and RFC-like output rather than a compact brief.
+- Expand short prompts into detailed implementation sections when the task is technical and implementation-facing.
 - End with a definition of done, validation matrix, acceptance checks, or an assumption ledger when those artifacts add review value.
 
 5. Move into implementation when requested

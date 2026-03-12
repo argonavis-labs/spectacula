@@ -19,6 +19,8 @@ Turn a vague request into a concrete specification in this order: frame the prob
 - Draft a short internal outline: likely sections, missing facts, major decisions, and risks.
 - Choose only the sections that add decision value. Do not emit boilerplate sections that say nothing.
 - Use [spec-blueprint.md](./references/spec-blueprint.md) as the default structure unless the user supplied a format to mirror.
+- For software, architecture, workflow, protocol, or implementation-facing feature work, default to the high-rigor or contract-heavy formats from [spec-blueprint.md](./references/spec-blueprint.md), not the light-weight variant.
+- Treat a long-form reference spec as the minimum acceptable detail level, not just a loose style cue.
 - Prefer a deeper spec over a broader one. Cut filler first.
 
 3. Ask clarifying questions
@@ -33,17 +35,20 @@ Turn a vague request into a concrete specification in this order: frame the prob
 
 4. Write the spec
 - Match the user's requested format. When the user provides an example spec, mirror its title style, numbered headings, table usage, and appendix/checklist structure.
+- Mirror the reference spec's detail density too: if the example is RFC-like, produce a full RFC-like document with substantial sections and subsections, not a compressed brief.
 - If the user provides multiple example specs, synthesize the shared structure and quality bar instead of copying any single document mechanically.
 - Separate facts, decisions, and assumptions.
 - Make behavior concrete: include inputs, outputs, state, routing rules, failure handling, and validation logic where relevant.
+- Expand terse bullets into implementation-usable sections. A short user prompt does not justify a short spec when the requested output is an implementation-ready technical specification.
 - Use tables for schemas, attributes, comparison points, and configuration surfaces.
 - Use pseudocode only when it clarifies nontrivial behavior.
+- For repository-backed feature work, include current-state context, proposed data/backend/frontend changes, instrumentation, failure handling, testing, and definition of done unless the user explicitly asks for a lighter artifact.
 - End with a definition of done, validation matrix, acceptance checks, open questions, or assumption ledger when those artifacts add review value.
 
 5. Close the loop
 - Call out unresolved unknowns instead of hiding them in vague prose.
 - Mark assumptions with enough specificity that another engineer or PM can confirm or reject them.
-- If the user asks for a lighter artifact, compress the spec without dropping the planning, question, and assumption workflow.
+- Compress the spec only when the user explicitly asks for a lighter artifact, draft, brief, or memo. Otherwise, keep the default output fully detailed.
 
 6. Move into implementation when requested
 - Treat the completed spec as the reference contract for implementation.

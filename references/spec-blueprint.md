@@ -2,6 +2,23 @@
 
 Use this blueprint as the default shape for long-form specs. Reorder or trim sections to fit the request, but keep the document decision-heavy and concrete.
 
+## Detail Floor
+
+When Spectacula is asked for an implementation-ready technical spec, detail is the default, not an optional extra.
+
+Use the high-rigor or contract-heavy formats by default when any of these are true:
+
+- the user invokes Spectacula for software, systems, workflows, protocols, migrations, or repository-backed feature work
+- the user provides a long-form reference spec with numbered sections, subsections, tables, appendices, or validation checklists
+- the output is intended to guide implementation rather than just discussion
+
+In those cases:
+
+- treat the reference spec as the minimum acceptable depth bar
+- prefer full sections with explanatory prose over short bullet-only summaries
+- include subsections, contracts, and validation material when they reduce guesswork
+- do not collapse to the light-weight variant unless the user explicitly asks for a brief, draft, memo, or short version
+
 ## Style Signals To Mirror
 
 When the user provides an example spec, mirror the structural signals before you mirror the wording:
@@ -83,6 +100,48 @@ Use this variant when the document needs to define:
 - failure classes and recovery behavior
 - conformance tests and implementation gates
 
+## Repository-Backed Feature Spec
+
+Use this shape when the request is a feature inside an existing product or codebase and the user still wants an implementation-ready document rather than a short product brief:
+
+```md
+# <Feature> Specification
+
+Status: Draft v1
+Purpose: Define the feature, affected systems, implementation contract, and validation scope.
+
+## 1. Overview and Goals
+## 2. Current State and Problem
+## 3. Scope and Non-Goals
+## 4. UX / Interaction Model
+## 5. Functional Requirements
+## 6. Data and Domain Model
+## 7. Backend / Service / Context Changes
+## 8. Frontend / UI / Rendering Changes
+## 9. Observability and Instrumentation
+## 10. Failure Modes, Edge Cases, and Backward Compatibility
+## 11. Rollout / Migration Plan
+## 12. Test Plan and Validation Matrix
+## 13. Definition of Done
+## 14. Open Questions / Assumptions
+```
+
+This variant is the right default for requests like:
+
+- “build this dashboard feature”
+- “add this workflow to the existing app”
+- “design this repo-backed UI change”
+- “write the implementation spec for this product behavior”
+
+For this variant, include:
+
+- current codebase context and affected modules when known
+- exact user-visible behavior
+- persisted data and fallback behavior
+- backend and frontend responsibilities
+- instrumentation and success signals
+- explicit acceptance checks and implementation gates
+
 ## Recommended Section Menu
 
 Pick from these sections based on the artifact type:
@@ -128,10 +187,12 @@ Use these subsection patterns when they add clarity:
 - Use tables for fields, attributes, options, policies, enums, and comparison points.
 - Use pseudocode for routing rules, orchestration loops, validation logic, and nontrivial state transitions.
 - Use checklists for definition of done, parity matrices, rollout gates, and test matrices.
+- Use numbered sections and subsections when the output is implementation-facing.
 - State defaults explicitly.
 - State precedence rules explicitly when multiple configuration layers exist.
 - State implementation boundaries explicitly: what the system owns, what extensions own, and what remains out of scope.
 - Distinguish facts from assumptions when the source material is incomplete.
+- Expand terse requirements into prose that explains behavior, source of truth, fallback behavior, and validation expectations.
 
 ## Light-Weight Variant
 
