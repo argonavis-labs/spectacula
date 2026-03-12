@@ -11,6 +11,17 @@ It combines:
 
 The goal is to take a rough idea, turn it into a rigorous specification, track the work through approval and implementation, preserve resume context if execution is interrupted, and answer status questions from structured metadata.
 
+## Packaging Best Practice
+
+This repository follows a split that works well across both agent ecosystems:
+
+- the installed package stays static and reusable
+- the live `docs/spectacula` state lives in the user's project repo
+- Codex uses the root [SKILL.md](./SKILL.md)
+- Claude Code uses the plugin manifest at [.claude-plugin/plugin.json](./.claude-plugin/plugin.json) and the plugin skill at [skills/spectacula/SKILL.md](./skills/spectacula/SKILL.md)
+
+The top-level `skills/` directory exists because Claude plugins require that layout. It does not mean this repo contains multiple logical skills.
+
 ## Repository Layout
 
 ```text
@@ -73,6 +84,10 @@ python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-githu
 
 Restart Codex after installing or updating the skill.
 
+Codex entrypoint:
+
+- [SKILL.md](./SKILL.md)
+
 Important:
 
 - Installing the skill does not make this repository the home for your live specs.
@@ -103,6 +118,10 @@ Plugin files:
 
 - Manifest: [.claude-plugin/plugin.json](./.claude-plugin/plugin.json)
 - Skill: [skills/spectacula/SKILL.md](./skills/spectacula/SKILL.md)
+
+Claude Code entrypoint:
+
+- `/spectacula:spectacula`
 
 ## Bootstrap A User Repo
 
