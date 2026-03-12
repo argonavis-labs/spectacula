@@ -20,6 +20,9 @@ Use Spectacula to turn a vague request into a tracked, implementation-ready spec
 3. Ask clarifying questions
 - Ask 3-7 high-leverage questions when the request is still ambiguous.
 - Prefer grouped, concrete questions that affect scope, interfaces, constraints, acceptance criteria, or rollout.
+- Ask the questions once, in a single batch to the user.
+- Do not send a separate progress note that repeats or previews the same questions.
+- If you need a lead-in, keep it to one sentence and include the full question list immediately after it.
 
 4. Write the spec
 - Produce a structured Markdown spec with concrete behavior, interfaces, failure handling, and validation logic where relevant.

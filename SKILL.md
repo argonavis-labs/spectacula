@@ -25,6 +25,9 @@ Turn a vague request into a concrete specification in this order: frame the prob
 - Ask 3-7 high-leverage questions from [question-bank.md](./references/question-bank.md).
 - Prioritize questions that change scope, interfaces, constraints, acceptance criteria, or rollout decisions.
 - Ask grouped, concrete questions instead of open-ended fishing.
+- Ask the clarifying questions once, in a single user-facing batch.
+- Do not preview the same questions in a progress update and then repeat them again.
+- If a short lead-in is useful, keep it to one sentence and place the questions immediately below it in the same message.
 - Skip questions only when the prompt already contains enough detail to support a defensible spec.
 - If the user says to make reasonable assumptions, proceed and record the assumptions explicitly.
 
