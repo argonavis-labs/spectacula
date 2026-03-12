@@ -1,6 +1,6 @@
-# Spectacula
+# Spectacula 🧛🏻‍♂️
 
-Spectacula is a spec-first workflow for Codex and Claude.
+Spectacula 🧛🏻‍♂️ is a spec-first workflow for Codex and Claude.
 
 It combines:
 
@@ -111,6 +111,12 @@ $spectacula spec-audit docs/spectacula/specs
 $spectacula spec-upgrade docs/spectacula/specs/evidence-first-insight-detail.md
 ```
 
+Help prompt:
+
+```text
+$spectacula help
+```
+
 When you want to steer the result more explicitly, add one of these suffixes:
 
 - `Match this reference in depth and structure`
@@ -170,6 +176,24 @@ Codex invocation:
 
 ```text
 $spectacula <your idea>
+```
+
+Examples:
+
+```text
+$spectacula help
+```
+
+```text
+$spectacula Build a full implementation-ready spec for dashboard alert explainability.
+```
+
+```text
+$spectacula spec-audit docs/spectacula/specs
+```
+
+```text
+$spectacula spec-upgrade docs/spectacula/specs/evidence-first-insight-detail.md
 ```
 
 Important:
@@ -246,6 +270,24 @@ Plugin files:
 Claude Code entrypoint:
 
 - `/spectacula:spectacula`
+
+Claude usage examples:
+
+```text
+/spectacula:spectacula help
+```
+
+```text
+/spectacula:spectacula Build a full implementation-ready spec for dashboard alert explainability.
+```
+
+```text
+/spectacula:spectacula spec-audit docs/spectacula/specs
+```
+
+```text
+/spectacula:spectacula spec-upgrade docs/spectacula/specs/evidence-first-insight-detail.md
+```
 
 Available Claude plugin subagents:
 
@@ -356,6 +398,10 @@ $spectacula <your idea>
 Examples:
 
 ```text
+$spectacula help
+```
+
+```text
 $spectacula Evidence-first insight detail
 ```
 
@@ -373,6 +419,60 @@ $spectacula spec-audit docs/spectacula/specs and rank the weakest specs by imple
 
 ```text
 $spectacula spec-upgrade docs/spectacula/specs/evidence-first-insight-detail.md using repo context and the Attractor-style reference as the quality bar.
+```
+
+## Help And Best-Practice Usage
+
+Use help when you want the workflow summary without starting work:
+
+```text
+$spectacula help
+```
+
+If you accidentally type the common typo:
+
+```text
+$spectacular help
+```
+
+Spectacula should treat that as a request for help and return the same usage guidance.
+
+Best-practice prompt patterns:
+
+- New spec from a short idea:
+
+```text
+$spectacula <short feature or system idea>
+```
+
+- New spec with stronger steering:
+
+```text
+$spectacula <idea>. Match this reference in depth and structure. Use repo context and make reasonable assumptions.
+```
+
+- Audit all specs:
+
+```text
+$spectacula spec-audit docs/spectacula/specs
+```
+
+- Upgrade one weak spec:
+
+```text
+$spectacula spec-upgrade docs/spectacula/specs/<slug>.md
+```
+
+- Check status:
+
+```text
+$spectacula What is the status of <slug>?
+```
+
+- Drive implementation from an approved spec:
+
+```text
+$spectacula Implement docs/spectacula/specs/<slug>.md and keep the manifest current through ready, inprogress, and done.
 ```
 
 ## Examples And Templates

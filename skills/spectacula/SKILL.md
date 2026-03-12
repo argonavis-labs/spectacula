@@ -1,6 +1,6 @@
 ---
 name: spectacula
-description: Plan, write, store, track, audit, upgrade, and implement detailed specifications from rough ideas. Use when Claude needs to turn a high-level or terse prompt into a clarified, implementation-ready spec by combining repo context with reference examples, audit or upgrade existing specs in docs/spectacula/specs, manage the work through docs/spectacula in the user's repo, preserve resume context, or answer status questions about active or completed specs.
+description: Plan, write, store, track, audit, upgrade, and implement detailed specifications from rough ideas. Use when Claude needs to turn a high-level or terse prompt into a clarified, implementation-ready spec by combining repo context with reference examples, audit or upgrade existing specs in docs/spectacula/specs, manage the work through docs/spectacula in the user's repo, preserve resume context, answer status questions about active or completed specs, or provide Spectacula help and usage guidance.
 ---
 
 # Spectacula
@@ -11,6 +11,13 @@ It also supports two explicit review workflows:
 
 - `spec-audit` for reviewing existing specs against the current Spectacula quality bar
 - `spec-upgrade` for rewriting existing specs in place to meet that quality bar
+
+## Help Mode
+
+If the user asks for help, usage, examples, installation guidance, or types `/spectacula:spectacula help`:
+
+- Do not start planning or rewriting specs unless the user also asked for that.
+- Return a concise usage guide with the main workflows, command patterns, and docs/spectacula lifecycle paths.
 
 ## Core Workflow
 

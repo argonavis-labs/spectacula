@@ -1,6 +1,6 @@
 ---
 name: spectacula
-description: Plan, write, store, track, audit, upgrade, and implement detailed specifications from rough ideas. Use when Codex needs to take a high-level or terse prompt, infer a strong implementation-ready spec shape from repo context and reference examples, ask clarifying questions only where they materially change the design, write a structured spec, audit or upgrade existing specs in `docs/spectacula/specs`, move the work through the `docs/spectacula` lifecycle, preserve resume context across `specs`, `ready`, `inprogress`, and `done`, or answer status questions about active or completed specs.
+description: Plan, write, store, track, audit, upgrade, and implement detailed specifications from rough ideas. Use when Codex needs to take a high-level or terse prompt, infer a strong implementation-ready spec shape from repo context and reference examples, ask clarifying questions only where they materially change the design, write a structured spec, audit or upgrade existing specs in `docs/spectacula/specs`, move the work through the `docs/spectacula` lifecycle, preserve resume context across `specs`, `ready`, `inprogress`, and `done`, answer status questions about active or completed specs, or provide Spectacula help and usage guidance, including the common typo `spectacular`.
 ---
 
 # Spectacula
@@ -11,6 +11,20 @@ Spectacula also supports two explicit review workflows:
 
 - `spec-audit`: review one or more existing specs against the current Spectacula quality bar and report structured findings
 - `spec-upgrade`: rewrite one or more existing specs in place so they meet the current Spectacula quality bar while preserving intent
+
+## Help Mode
+
+If the user asks for help, usage, examples, installation guidance, or types `spectacula help`, `$spectacula help`, or the common typo `spectacular help` / `$spectacular help`:
+
+- Do not start planning or rewriting specs unless the user also asked for that.
+- Return a concise help response with:
+  - what Spectacula does
+  - the core commands or prompt patterns
+  - where specs and manifests live
+  - how to create, audit, upgrade, implement, and query status
+  - the most relevant install or upgrade note when asked
+- Prefer concrete command-style examples over abstract explanation.
+- Mention that the canonical Codex invocation is `$spectacula ...`.
 
 ## Run The Workflow
 
