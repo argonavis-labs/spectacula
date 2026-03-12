@@ -45,6 +45,8 @@ Ask only the questions that materially change the design. Prefer 3-7 total. Stop
 - Ask for concrete targets instead of abstract preferences.
 - Bundle related questions into one message so the user can answer efficiently.
 - Offer a fallback path: "If unspecified, I’ll assume X and mark it in the spec."
+- Prefer inference over interrogation. If repo context or the user's reference examples already answer a question well enough, do not ask it.
+- Do not ask whether the user wants a full spec versus a short brief unless they explicitly indicate they want a lighter artifact.
 
 ## Example Question Sets
 

@@ -1,4 +1,4 @@
 interface:
   display_name: "Spectacula"
-  short_description: "Plan, track, and implement specs"
-  default_prompt: "Use $spectacula to turn a rough idea into a tracked, implementation-ready specification in docs/spectacula."
+  short_description: "Turn rough ideas into full implementation specs"
+  default_prompt: "Use $spectacula to turn a short idea into a full implementation-ready specification in docs/spectacula, using repo context and reference examples to infer the right depth."

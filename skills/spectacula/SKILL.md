@@ -1,6 +1,6 @@
 ---
 name: spectacula
-description: Plan, write, store, track, and implement detailed specifications from rough ideas. Use when Claude needs to turn a high-level prompt into a clarified, implementation-ready spec, manage the work through docs/spectacula in the user's repo, preserve resume context, or answer status questions about active or completed specs.
+description: Plan, write, store, track, and implement detailed specifications from rough ideas. Use when Claude needs to turn a high-level or terse prompt into a clarified, implementation-ready spec by combining repo context with reference examples, manage the work through docs/spectacula in the user's repo, preserve resume context, or answer status questions about active or completed specs.
 ---
 
 # Spectacula
@@ -12,15 +12,18 @@ Use Spectacula to turn a vague request into a tracked, implementation-ready spec
 1. Frame the request
 - Identify the artifact type, audience, constraints, dependencies, deadlines, and success criteria.
 - Inspect the repo or provided docs before proposing architecture when the spec depends on an existing system.
+- If the prompt is terse, infer the likely implementation surface and affected areas from the repo before asking for more detail.
 
 2. Plan before writing
 - Draft a short internal outline with likely sections, missing facts, major decisions, and risks.
 - Match the shape and rigor of any reference specs the user provides.
 - For software, system, workflow, protocol, or implementation-facing feature work, default to a long-form engineering spec unless the user explicitly asks for something lighter.
+- Assume implementation-ready depth by default.
 
 3. Ask clarifying questions
 - Ask 3-7 high-leverage questions when the request is still ambiguous.
 - Prefer grouped, concrete questions that affect scope, interfaces, constraints, acceptance criteria, or rollout.
+- Do not ask questions whose answers can be responsibly inferred from the repo or the supplied references.
 - Ask the questions once, in a single batch to the user.
 - Do not send a separate progress note that repeats or previews the same questions.
 - If you need a lead-in, keep it to one sentence and include the full question list immediately after it.
@@ -29,6 +32,7 @@ Use Spectacula to turn a vague request into a tracked, implementation-ready spec
 - Produce a structured Markdown spec with concrete behavior, interfaces, failure handling, and validation logic where relevant.
 - Match the depth of any reference spec the user provides. If the example is long-form and RFC-like, produce a long-form and RFC-like output rather than a compact brief.
 - Expand short prompts into detailed implementation sections when the task is technical and implementation-facing.
+- Fill in likely sections from context so a short prompt still becomes a complete engineering spec.
 - End with a definition of done, validation matrix, acceptance checks, or an assumption ledger when those artifacts add review value.
 
 5. Move into implementation when requested

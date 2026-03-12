@@ -1,6 +1,6 @@
 ---
 name: spectacula
-description: Plan, write, store, track, and implement detailed specifications from rough ideas. Use when Codex needs to take a high-level prompt, do an initial planning pass, ask clarifying questions, write a structured spec, move the work through the `docs/spectacula` lifecycle, preserve resume context across `specs`, `ready`, `inprogress`, and `done`, or answer status questions about active or completed specs.
+description: Plan, write, store, track, and implement detailed specifications from rough ideas. Use when Codex needs to take a high-level or terse prompt, infer a strong implementation-ready spec shape from repo context and reference examples, ask clarifying questions only where they materially change the design, write a structured spec, move the work through the `docs/spectacula` lifecycle, preserve resume context across `specs`, `ready`, `inprogress`, and `done`, or answer status questions about active or completed specs.
 ---
 
 # Spectacula
@@ -14,6 +14,8 @@ Turn a vague request into a concrete specification in this order: frame the prob
 - Identify the reader: engineer, operator, PM, reviewer, or mixed audience.
 - Extract explicit constraints, success criteria, dependencies, deadlines, and platform limits from the prompt or codebase.
 - Inspect the repo or provided docs before proposing architecture when the request depends on an existing system.
+- If the user prompt is terse, infer the likely implementation surface from repo context instead of waiting for the user to restate obvious details.
+- Synthesize a concrete working title, purpose line, and likely affected subsystems before the question phase.
 
 2. Plan before writing
 - Draft a short internal outline: likely sections, missing facts, major decisions, and risks.
@@ -21,11 +23,13 @@ Turn a vague request into a concrete specification in this order: frame the prob
 - Use [spec-blueprint.md](./references/spec-blueprint.md) as the default structure unless the user supplied a format to mirror.
 - For software, architecture, workflow, protocol, or implementation-facing feature work, default to the high-rigor or contract-heavy formats from [spec-blueprint.md](./references/spec-blueprint.md), not the light-weight variant.
 - Treat a long-form reference spec as the minimum acceptable detail level, not just a loose style cue.
+- Assume the user wants an implementation-ready spec by default. Do not ask whether they want a brief versus a full spec unless the prompt explicitly suggests they want something lightweight.
 - Prefer a deeper spec over a broader one. Cut filler first.
 
 3. Ask clarifying questions
 - Ask 3-7 high-leverage questions from [question-bank.md](./references/question-bank.md).
 - Prioritize questions that change scope, interfaces, constraints, acceptance criteria, or rollout decisions.
+- Do not spend questions on details you can responsibly infer from the repo, the user prompt, or the provided reference specs.
 - Ask grouped, concrete questions instead of open-ended fishing.
 - Ask the clarifying questions once, in a single user-facing batch.
 - Do not preview the same questions in a progress update and then repeat them again.
@@ -40,6 +44,7 @@ Turn a vague request into a concrete specification in this order: frame the prob
 - Separate facts, decisions, and assumptions.
 - Make behavior concrete: include inputs, outputs, state, routing rules, failure handling, and validation logic where relevant.
 - Expand terse bullets into implementation-usable sections. A short user prompt does not justify a short spec when the requested output is an implementation-ready technical specification.
+- Convert short prompts into rich specs by filling in the missing structure: current state, goals, scope, UX or operator flow, data contracts, backend/frontend changes, instrumentation, edge cases, rollout, and validation.
 - Use tables for schemas, attributes, comparison points, and configuration surfaces.
 - Use pseudocode only when it clarifies nontrivial behavior.
 - For repository-backed feature work, include current-state context, proposed data/backend/frontend changes, instrumentation, failure handling, testing, and definition of done unless the user explicitly asks for a lighter artifact.
@@ -92,6 +97,7 @@ Turn a vague request into a concrete specification in this order: frame the prob
 - Define terms once and keep names stable across sections.
 - Prefer explicit tradeoffs over generic praise or filler.
 - Avoid repeating the same requirement in multiple sections unless the repetition is intentional and cross-referenced.
+- Make the user's job easy: a short, rough prompt should still yield a strong spec if the repo and examples provide enough context.
 
 ## Use The References
 

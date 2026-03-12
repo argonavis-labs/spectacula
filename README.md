@@ -53,6 +53,7 @@ assets/
 - plans before writing
 - asks clarifying questions
 - writes implementation-ready specs
+- turns short prompts into full engineering specs by using repo context and reference examples
 - stores canonical specs in `docs/spectacula/specs`
 - moves stage manifests across `specs`, `ready`, `inprogress`, and `done`
 - preserves summary, history, verification state, and resume context
@@ -70,6 +71,39 @@ Primary files:
 - Claude plugin manifest: [.claude-plugin/plugin.json](./.claude-plugin/plugin.json)
 - Claude plugin skill: [skills/spectacula/SKILL.md](./skills/spectacula/SKILL.md)
 - Claude plugin subagents: [agents](./agents)
+
+## Better Specs With Less Prompting
+
+Spectacula is designed so the user does not need to write a perfect prompt.
+
+Default behavior:
+
+- short prompts are expanded into implementation-ready specs
+- repo context is used to infer affected systems and current state
+- reference specs set the expected depth and structure
+- clarifying questions are reserved for decisions that materially change the design
+- the default output is a full technical spec, not a brief
+
+Good minimal prompts:
+
+```text
+$spectacula Evidence-first insight detail
+```
+
+```text
+$spectacula Add approval gates to the deploy workflow. Match the Attractor-style reference in depth.
+```
+
+```text
+$spectacula Build a full implementation-ready spec for dashboard alert explainability. Use the repo and existing docs to fill in the current state.
+```
+
+When you want to steer the result more explicitly, add one of these suffixes:
+
+- `Match this reference in depth and structure`
+- `Assume implementation-ready detail by default`
+- `Use the existing repo context and make reasonable assumptions`
+- `Produce a full RFC-style engineering spec`
 
 ## Install For Codex
 
@@ -228,6 +262,28 @@ See [assets/repo-template/docs/spectacula/README.md](./assets/repo-template/docs
 6. Move the manifest to `inprogress/` when implementation starts.
 7. Run verification and final spec review.
 8. Move the manifest to `done/` when the implementation and review are complete.
+
+## Codex Invocation
+
+Invoke the skill explicitly in Codex with:
+
+```text
+$spectacula <your idea>
+```
+
+Examples:
+
+```text
+$spectacula Evidence-first insight detail
+```
+
+```text
+$spectacula Add spec status dashboards for docs/spectacula. Use repo context and write the full implementation-ready spec.
+```
+
+```text
+$spectacula Design a DOT-based workflow runner. Match the provided reference spec in depth and structure.
+```
 
 ## Examples And Templates
 
