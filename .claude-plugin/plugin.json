@@ -1,0 +1,17 @@
+{
+  "name": "spectacula",
+  "version": "1.0.0",
+  "description": "Spec-first planning, lifecycle tracking, and implementation workflow for Claude Code and Codex.",
+  "author": {
+    "name": "Argonavis Labs"
+  },
+  "homepage": "https://github.com/argonavis-labs/spectacula",
+  "repository": "https://github.com/argonavis-labs/spectacula",
+  "keywords": [
+    "claude-code",
+    "codex",
+    "specs",
+    "planning",
+    "workflow"
+  ]
+}

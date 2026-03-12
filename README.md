@@ -5,6 +5,7 @@ Spectacula is a spec-first workflow for Codex and Claude.
 It combines:
 
 - a reusable Codex skill at the repository root
+- a first-class Claude Code plugin
 - a Claude-compatible prompt reference
 - a bootstrap template for creating `docs/spectacula` inside a user's working repository
 
@@ -16,6 +17,11 @@ The goal is to take a rough idea, turn it into a rigorous specification, track t
 SKILL.md
 agents/
   openai.yaml
+.claude-plugin/
+  plugin.json
+skills/
+  spectacula/
+    SKILL.md
 references/
 scripts/
 assets/
@@ -44,6 +50,8 @@ Primary files:
 - Lifecycle contract: [references/spectacula-lifecycle.md](./references/spectacula-lifecycle.md)
 - Bootstrap script: [scripts/bootstrap_repo.py](./scripts/bootstrap_repo.py)
 - Bootstrap template: [assets/repo-template/docs/spectacula](./assets/repo-template/docs/spectacula)
+- Claude plugin manifest: [.claude-plugin/plugin.json](./.claude-plugin/plugin.json)
+- Claude plugin skill: [skills/spectacula/SKILL.md](./skills/spectacula/SKILL.md)
 
 ## Install For Codex
 
@@ -73,9 +81,28 @@ Important:
 
 ## Use With Claude
 
-Copy the prompt from [references/claude-portable-prompt.md](./references/claude-portable-prompt.md) into Claude project instructions or an agent definition.
+Spectacula now supports Claude Code as a real plugin, not just a pasted prompt.
+
+Local development and testing:
+
+```bash
+claude --plugin-dir .
+```
+
+Then invoke the skill as:
+
+```text
+/spectacula:spectacula
+```
+
+You can still copy the prompt from [references/claude-portable-prompt.md](./references/claude-portable-prompt.md) into Claude project instructions or an agent definition when a plugin is not available.
 
 Keep using the same `docs/spectacula` directory contract so Codex and Claude share the same source of truth.
+
+Plugin files:
+
+- Manifest: [.claude-plugin/plugin.json](./.claude-plugin/plugin.json)
+- Skill: [skills/spectacula/SKILL.md](./skills/spectacula/SKILL.md)
 
 ## Bootstrap A User Repo
 
@@ -148,4 +175,10 @@ Validate the skill:
 
 ```bash
 PYTHONPATH=/tmp/skill-creator-deps python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py .
+```
+
+Test the Claude plugin locally:
+
+```bash
+claude --plugin-dir .
 ```
