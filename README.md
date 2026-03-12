@@ -54,6 +54,8 @@ assets/
 - asks clarifying questions
 - writes implementation-ready specs
 - turns short prompts into full engineering specs by using repo context and reference examples
+- audits existing specs against the current quality bar
+- upgrades weaker specs in place
 - stores canonical specs in `docs/spectacula/specs`
 - moves stage manifests across `specs`, `ready`, `inprogress`, and `done`
 - preserves summary, history, verification state, and resume context
@@ -98,12 +100,24 @@ $spectacula Add approval gates to the deploy workflow. Match the Attractor-style
 $spectacula Build a full implementation-ready spec for dashboard alert explainability. Use the repo and existing docs to fill in the current state.
 ```
 
+Review prompts:
+
+```text
+$spectacula spec-audit docs/spectacula/specs
+```
+
+```text
+$spectacula spec-upgrade docs/spectacula/specs/evidence-first-insight-detail.md
+```
+
 When you want to steer the result more explicitly, add one of these suffixes:
 
 - `Match this reference in depth and structure`
 - `Assume implementation-ready detail by default`
 - `Use the existing repo context and make reasonable assumptions`
 - `Produce a full RFC-style engineering spec`
+- `Audit every spec against the current Spectacula quality bar`
+- `Upgrade this spec in place to match the Attractor-style reference quality`
 
 ## Install For Codex
 
@@ -283,6 +297,14 @@ $spectacula Add spec status dashboards for docs/spectacula. Use repo context and
 
 ```text
 $spectacula Design a DOT-based workflow runner. Match the provided reference spec in depth and structure.
+```
+
+```text
+$spectacula spec-audit docs/spectacula/specs and rank the weakest specs by implementation risk.
+```
+
+```text
+$spectacula spec-upgrade docs/spectacula/specs/evidence-first-insight-detail.md using repo context and the Attractor-style reference as the quality bar.
 ```
 
 ## Examples And Templates

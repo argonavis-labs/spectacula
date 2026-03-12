@@ -1,11 +1,16 @@
 ---
 name: spectacula
-description: Plan, write, store, track, and implement detailed specifications from rough ideas. Use when Claude needs to turn a high-level or terse prompt into a clarified, implementation-ready spec by combining repo context with reference examples, manage the work through docs/spectacula in the user's repo, preserve resume context, or answer status questions about active or completed specs.
+description: Plan, write, store, track, audit, upgrade, and implement detailed specifications from rough ideas. Use when Claude needs to turn a high-level or terse prompt into a clarified, implementation-ready spec by combining repo context with reference examples, audit or upgrade existing specs in docs/spectacula/specs, manage the work through docs/spectacula in the user's repo, preserve resume context, or answer status questions about active or completed specs.
 ---
 
 # Spectacula
 
 Use Spectacula to turn a vague request into a tracked, implementation-ready specification and then drive the work through implementation and completion.
+
+It also supports two explicit review workflows:
+
+- `spec-audit` for reviewing existing specs against the current Spectacula quality bar
+- `spec-upgrade` for rewriting existing specs in place to meet that quality bar
 
 ## Core Workflow
 
@@ -38,6 +43,11 @@ Use Spectacula to turn a vague request into a tracked, implementation-ready spec
 5. Move into implementation when requested
 - Treat the approved spec as the reference contract.
 - Implement against it, re-read it, fix gaps, run verification gates, and finish with a final review against the same spec.
+
+6. Audit or upgrade specs when requested
+- For `spec-audit`, inspect one or more specs in `docs/spectacula/specs`, compare them against the current quality bar and supplied references, and produce structured findings without rewriting unless asked.
+- For `spec-upgrade`, rewrite one or more existing specs in place to match the current quality bar while preserving the original intent and repo context.
+- Use [../../references/spec-audit-rubric.md](../../references/spec-audit-rubric.md) for both workflows.
 
 ## Manage Spectacula State
 
@@ -74,6 +84,7 @@ When asked for the status of a spec:
 - For the authoritative Codex skill instructions, see [../../SKILL.md](../../SKILL.md)
 - For the lifecycle contract, see [../../references/spectacula-lifecycle.md](../../references/spectacula-lifecycle.md)
 - For spec structure guidance, see [../../references/spec-blueprint.md](../../references/spec-blueprint.md)
+- For review and upgrade quality criteria, see [../../references/spec-audit-rubric.md](../../references/spec-audit-rubric.md)
 - For clarifying-question strategy, see [../../references/question-bank.md](../../references/question-bank.md)
 - For implementation handoff and verification expectations, see [../../references/implementation-handoff.md](../../references/implementation-handoff.md)
 - For Claude parallel-execution guidance, see [../../references/claude-agent-teams.md](../../references/claude-agent-teams.md)

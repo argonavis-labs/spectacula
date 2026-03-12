@@ -101,6 +101,13 @@ Recommended `history` item fields:
 - `to_stage`
 - `note`
 
+Useful additional history events:
+
+- `spec_audited`
+- `spec_upgraded`
+- `upgrade_blocked`
+- `review_followup_needed`
+
 ## Example Manifest
 
 ```json
@@ -187,6 +194,7 @@ Best practice for `inprogress -> done`:
 - Resume by reading the canonical spec first, then the current stage manifest.
 - Use `resume_context.last_completed_step`, `pending_steps`, and `history` to continue from the latest checkpoint.
 - Update `updated_at`, `summary`, `next_action`, and `resume_context` whenever the current state materially changes.
+- When a spec is audited or upgraded, record the result in `history` and update `resume_context` with the remaining findings or follow-up tasks.
 
 ## Status Query Workflow
 

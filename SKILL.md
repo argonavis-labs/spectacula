@@ -1,11 +1,16 @@
 ---
 name: spectacula
-description: Plan, write, store, track, and implement detailed specifications from rough ideas. Use when Codex needs to take a high-level or terse prompt, infer a strong implementation-ready spec shape from repo context and reference examples, ask clarifying questions only where they materially change the design, write a structured spec, move the work through the `docs/spectacula` lifecycle, preserve resume context across `specs`, `ready`, `inprogress`, and `done`, or answer status questions about active or completed specs.
+description: Plan, write, store, track, audit, upgrade, and implement detailed specifications from rough ideas. Use when Codex needs to take a high-level or terse prompt, infer a strong implementation-ready spec shape from repo context and reference examples, ask clarifying questions only where they materially change the design, write a structured spec, audit or upgrade existing specs in `docs/spectacula/specs`, move the work through the `docs/spectacula` lifecycle, preserve resume context across `specs`, `ready`, `inprogress`, and `done`, or answer status questions about active or completed specs.
 ---
 
 # Spectacula
 
 Turn a vague request into a concrete specification in this order: frame the problem, plan the document, ask clarifying questions, then write the final spec. When the task continues into delivery, hand off into an implementation loop that builds against the spec and re-checks the result until the build matches the reference.
+
+Spectacula also supports two explicit review workflows:
+
+- `spec-audit`: review one or more existing specs against the current Spectacula quality bar and report structured findings
+- `spec-upgrade`: rewrite one or more existing specs in place so they meet the current Spectacula quality bar while preserving intent
 
 ## Run The Workflow
 
@@ -63,6 +68,34 @@ Turn a vague request into a concrete specification in this order: frame the prob
 - Fix verification failures before claiming completion unless the user explicitly accepts a blocked state.
 - Do not stop at "implementation done" if the result still misses required behavior from the reference spec.
 
+## Audit And Upgrade Existing Specs
+
+When the user asks for `spec-audit`:
+
+- Inspect one spec or all specs under `docs/spectacula/specs`.
+- Compare each spec against [spec-audit-rubric.md](./references/spec-audit-rubric.md), the current [spec-blueprint.md](./references/spec-blueprint.md), and any explicit reference specs the user supplied.
+- Evaluate at least:
+  - structure and section coverage
+  - implementation detail and current-state context
+  - contracts, data model, and interfaces where relevant
+  - failure handling, instrumentation, rollout, testing, and definition of done
+  - unresolved assumptions and missing decisions
+- Produce concrete findings per spec, ordered by severity and implementation risk.
+- Prefer a review style that says what is missing, weak, ambiguous, or non-actionable. Do not hide the gaps behind polite summaries.
+- If the user asked only for audit, do not rewrite the spec yet.
+- Update the matching manifest when present with review-oriented `summary`, `next_action`, `resume_context`, and a history event such as `spec_audited`.
+
+When the user asks for `spec-upgrade`:
+
+- Start from the existing spec as source material, not from scratch.
+- Preserve the original problem statement and product intent unless the user explicitly changes scope.
+- Rewrite the spec in place to meet the current Spectacula quality bar.
+- Use repo context, existing code, existing docs, and prior manifests to infer missing implementation detail where safe.
+- Add the missing structure, subsections, tables, validation material, and assumptions needed to make the document implementation-ready.
+- If key decisions are still unknown, ask only the minimum clarifying questions that materially affect the upgraded spec.
+- Update the matching manifest with what changed, any remaining blockers, the next action, and a history event such as `spec_upgraded`.
+- If the upgraded spec is still blocked on human decisions, record that explicitly instead of pretending it is complete.
+
 ## Manage Spectacula State
 
 - Always store live specs in the user's current working repository, not in the installed skill directory.
@@ -81,6 +114,7 @@ Turn a vague request into a concrete specification in this order: frame the prob
 - Identify the spec by slug, title, or closest matching manifest/spec pair.
 - Report the current stage, summary, blockers, next action, verification status, last update time, and canonical spec path.
 - For interrupted work, use the manifest `resume_context` plus the canonical spec to continue from the last checkpoint instead of starting over.
+- If the latest manifest history includes an audit or upgrade event, report the most important findings or upgrades too.
 
 ## Adapt The Spec To The Artifact
 
@@ -104,6 +138,7 @@ Turn a vague request into a concrete specification in this order: frame the prob
 - Use [spec-blueprint.md](./references/spec-blueprint.md) to choose and shape the final document structure.
 - Use [question-bank.md](./references/question-bank.md) to select the smallest set of clarifying questions that materially affects the spec.
 - Use [implementation-handoff.md](./references/implementation-handoff.md) when the task transitions from planning/specification into coding.
+- Use [spec-audit-rubric.md](./references/spec-audit-rubric.md) when reviewing or upgrading existing specs.
 - Use [spectacula-lifecycle.md](./references/spectacula-lifecycle.md) when storing or tracking specs in `docs/spectacula`.
 - Use [scripts/bootstrap_repo.py](./scripts/bootstrap_repo.py) or [assets/repo-template/docs/spectacula](./assets/repo-template/docs/spectacula) to scaffold `docs/spectacula` into the user's working repo.
 - Use [claude-portable-prompt.md](./references/claude-portable-prompt.md) when adapting this skill for Claude project instructions or a Claude agent prompt.
