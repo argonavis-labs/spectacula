@@ -97,7 +97,7 @@ Best-practice install for normal use:
 
 ```bash
 python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-github.py \
-  --repo argonavis-labs/spectacula \
+  --repo kent/spectacula \
   --path . \
   --name spectacula
 ```
@@ -121,7 +121,7 @@ Upgrade if you installed a copied snapshot from GitHub:
 ```bash
 rm -rf ~/.codex/skills/spectacula
 python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-github.py \
-  --repo argonavis-labs/spectacula \
+  --repo kent/spectacula \
   --path . \
   --name spectacula
 ```
@@ -174,20 +174,20 @@ This repo now includes a marketplace manifest at [.claude-plugin/marketplace.jso
 Best-practice install from GitHub:
 
 ```text
-/plugin marketplace add argonavis-labs/spectacula
-/plugin install spectacula@argonavis-labs
+/plugin marketplace add kent/spectacula
+/plugin install spectacula@kent
 ```
 
 Choose installation scope through the `/plugin` UI if you want `user`, `project`, or `local` scope explicitly. The CLI form also works:
 
 ```bash
-claude plugin install spectacula@argonavis-labs --scope project
+claude plugin install spectacula@kent --scope project
 ```
 
 Best-practice upgrade from the marketplace:
 
 ```text
-/plugin marketplace update argonavis-labs
+/plugin marketplace update kent
 /reload-plugins
 ```
 
