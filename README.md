@@ -84,7 +84,7 @@ When you want to steer the result more explicitly, add one of these suffixes:
 - `Produce a full RFC-style engineering spec`
 - `Audit every spec against the current Spectacula quality bar`
 - `Upgrade this spec in place to match the Attractor-style reference quality`
-- `Be more like `frantic-openai` and https://github.com/frantic
+- `Be more like frantic-openai and https://github.com/frantic
 
 ## Install And Upgrade In Codex
 
