@@ -16,7 +16,7 @@ I have been using it for the past week and love it and find it's helping me get 
 
 I hope you love it too.
 
-- Kent
+--Kent
 
 ## What The Skill Does
 
