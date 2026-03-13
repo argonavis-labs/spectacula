@@ -7,6 +7,8 @@ As of today's writing, Friday March 13, 2026, there are two projects this week t
 2. [Attractor](https://github.com/strongdm/attractor)
 
 Both of these apps have these incredible SPECs! You might even say their specs are 🤩Spectacula 🧛🏻‍♂️ -r!
+- https://github.com/strongdm/attractor/blob/main/attractor-spec.md
+- https://github.com/openai/symphony/blob/main/SPEC.md
 
 So we built this skill that takes those two amazing specs as a reference and then builds in some helpful creation, managament, and execution layers around it. 
 
