@@ -1,51 +1,20 @@
-# Spectacula 🧛🏻‍♂️
+# 🤩 Spectacula 🧛🏻‍♂️
 
-Spectacula 🧛🏻‍♂️ is a spec-first workflow for Codex and Claude.
+🤩 Spectacula 🧛🏻‍♂️ is a spec-first workflow for Codex and Claude.
 
-It combines:
+As of today's writing, Friday March 13, 2026, there are two projects this week that really gripped us at Argo. 
+1. [Symphony](https://github.com/openai/symphony)
+2. [Attractor](https://github.com/strongdm/attractor)
 
-- a reusable Codex skill at the repository root
-- a first-class Claude Code plugin
-- a Claude-compatible prompt reference
-- a bootstrap template for creating `docs/spectacula` inside a user's working repository
+Both of these apps have these incredible SPECs! You might even say their specs are 🤩Spectacula 🧛🏻‍♂️ -r!
 
-The goal is to take a rough idea, turn it into a rigorous specification, track the work through approval and implementation, preserve resume context if execution is interrupted, and answer status questions from structured metadata.
+So we built this skill that takes those two amazing specs as a reference and then builds in some helpful creation, managament, and execution layers around it. 
 
-## Packaging Best Practice
+I have been using it for the past week and love it and find it's helping me get more advanced and complicated features done. 
 
-This repository follows a split that works well across both agent ecosystems:
+I hope you love it too.
 
-- the installed package stays static and reusable
-- the live `docs/spectacula` state lives in the user's project repo
-- Codex uses the root [SKILL.md](./SKILL.md)
-- Claude Code uses the plugin manifest at [.claude-plugin/plugin.json](./.claude-plugin/plugin.json) and the plugin skill at [skills/spectacula/SKILL.md](./skills/spectacula/SKILL.md)
-
-The top-level `skills/` directory exists because Claude plugins require that layout. It does not mean this repo contains multiple logical skills.
-The top-level `agents/` directory is shared: `openai.yaml` is Codex-facing metadata, while the Markdown files are Claude Code subagents.
-
-## Repository Layout
-
-```text
-SKILL.md
-agents/
-  openai.yaml
-  spectacula-architect.md
-  spectacula-implementer.md
-  spectacula-reviewer.md
-  spectacula-status.md
-.claude-plugin/
-  plugin.json
-  marketplace.json
-skills/
-  spectacula/
-    SKILL.md
-references/
-scripts/
-assets/
-  repo-template/
-    docs/
-      spectacula/
-```
+- Kent
 
 ## What The Skill Does
 
@@ -63,18 +32,6 @@ assets/
 - drives implementation from the approved spec
 - requires verification gates before marking work done
 
-Primary files:
-
-- Skill instructions: [SKILL.md](./SKILL.md)
-- Claude prompt: [references/claude-portable-prompt.md](./references/claude-portable-prompt.md)
-- Claude team guidance: [references/claude-agent-teams.md](./references/claude-agent-teams.md)
-- Lifecycle contract: [references/spectacula-lifecycle.md](./references/spectacula-lifecycle.md)
-- Bootstrap script: [scripts/bootstrap_repo.py](./scripts/bootstrap_repo.py)
-- Bootstrap template: [assets/repo-template/docs/spectacula](./assets/repo-template/docs/spectacula)
-- Claude plugin manifest: [.claude-plugin/plugin.json](./.claude-plugin/plugin.json)
-- Claude plugin skill: [skills/spectacula/SKILL.md](./skills/spectacula/SKILL.md)
-- Claude plugin subagents: [agents](./agents)
-
 ## Better Specs With Less Prompting
 
 Spectacula is designed so the user does not need to write a perfect prompt.
@@ -90,7 +47,7 @@ Default behavior:
 Good minimal prompts:
 
 ```text
-$spectacula Evidence-first insight detail
+$spectacula Let's build a CRUD view for Agents
 ```
 
 ```text
@@ -125,6 +82,7 @@ When you want to steer the result more explicitly, add one of these suffixes:
 - `Produce a full RFC-style engineering spec`
 - `Audit every spec against the current Spectacula quality bar`
 - `Upgrade this spec in place to match the Attractor-style reference quality`
+- `Be more like `frantic-openai` and https://github.com/frantic
 
 ## Install And Upgrade In Codex
 
@@ -402,7 +360,7 @@ $spectacula help
 ```
 
 ```text
-$spectacula Evidence-first insight detail
+$spectacula CRUD layer for Agents
 ```
 
 ```text
