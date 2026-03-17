@@ -59,7 +59,7 @@ Use them directly from `/agents`, or ask the lead to create a team that uses the
 
 - `spectacula-architect` on task boundaries and conflict avoidance
 - one or more `spectacula-implementer` teammates on separate workstreams
-- `spectacula-reviewer` on continuous review and verification
+- `spectacula-reviewer` on continuous review, verification, and the final vetting done gate when `review_policy.final_vetting = "required"`
 
 ### Status / Recovery Team
 
@@ -78,7 +78,7 @@ Create an agent team for this spec. Use a spectacula-architect teammate to analy
 ### Start an implementation swarm
 
 ```text
-Create an agent team for this approved Spectacula spec. Use one spectacula-architect teammate to split the work into safe parallel tasks, two spectacula-implementer teammates for separate workstreams, and one spectacula-reviewer teammate to compare the results against the spec and verification gates. Avoid file conflicts and keep docs/spectacula resume context current.
+Create an agent team for this approved Spectacula spec. Use one spectacula-architect teammate to split the work into safe parallel tasks, two spectacula-implementer teammates for separate workstreams, and one spectacula-reviewer teammate to compare the results against the spec and verification gates. If `review_policy.final_vetting = "required"` for the current run, keep the reviewer separate from the implementers for the done gate. Avoid file conflicts and keep docs/spectacula resume context current.
 ```
 
 ### Require plan approval before edits
@@ -93,4 +93,4 @@ Create an agent team for this spec. Require plan approval before any implementer
 - Keep the live `docs/spectacula` tree in the user's repo, not the installed plugin directory.
 - Prefer one teammate per workstream with clear file ownership when possible.
 - Keep review parallel but final stage movement deliberate.
-- Do not move a spec to `done` until verification and spec review are complete.
+- Do not move a spec to `done` until verification and self-review are complete, plus final vetting when `review_policy.final_vetting = "required"`.

@@ -33,6 +33,26 @@ I hope you love it too.
 - preserves summary, history, verification state, and resume context
 - drives implementation from the approved spec
 - requires verification gates before marking work done
+- supports an invokable final-vetting prompt before marking work done
+
+Primary files:
+
+- Skill instructions: [SKILL.md](./SKILL.md)
+- Claude prompt: [references/claude-portable-prompt.md](./references/claude-portable-prompt.md)
+- Claude team guidance: [references/claude-agent-teams.md](./references/claude-agent-teams.md)
+- Lifecycle contract: [references/spectacula-lifecycle.md](./references/spectacula-lifecycle.md)
+- Command wrapper: [scripts/spectacula](./scripts/spectacula)
+- Bootstrap script: [scripts/bootstrap_repo.py](./scripts/bootstrap_repo.py)
+- Final vetting prompt renderer: [scripts/render_review_prompt.py](./scripts/render_review_prompt.py)
+- Bootstrap template: [assets/repo-template/docs/spectacula](./assets/repo-template/docs/spectacula)
+- Claude plugin manifest: [.claude-plugin/plugin.json](./.claude-plugin/plugin.json)
+- Claude plugin skill: [skills/spectacula/SKILL.md](./skills/spectacula/SKILL.md)
+- Claude plugin subagents: [agents](./agents)
+
+Per-call aliases:
+
+- `$spectacula ...` for the normal flow
+- `$spectacula++ ...` for the stricter flow that requires a final vetting pass before `done`
 
 ## Better Specs With Less Prompting
 
@@ -49,7 +69,7 @@ Default behavior:
 Good minimal prompts:
 
 ```text
-$spectacula Let's build a CRUD view for Agents
+$spectacula Add CRUD operations for Erlang-based OTP agents.
 ```
 
 ```text
@@ -57,7 +77,7 @@ $spectacula Add approval gates to the deploy workflow. Match the Attractor-style
 ```
 
 ```text
-$spectacula Build a full implementation-ready spec for dashboard alert explainability. Use the repo and existing docs to fill in the current state.
+$spectacula Build a full implementation-ready spec for CRUD operations for Erlang-based OTP agents. Use the repo and existing docs to fill in the current state.
 ```
 
 Review prompts:
@@ -145,7 +165,7 @@ $spectacula help
 ```
 
 ```text
-$spectacula Build a full implementation-ready spec for dashboard alert explainability.
+$spectacula Build a full implementation-ready spec for CRUD operations for Erlang-based OTP agents.
 ```
 
 ```text
@@ -292,13 +312,13 @@ See [references/claude-agent-teams.md](./references/claude-agent-teams.md) for r
 Create the working `docs/spectacula` tree in a user repo with:
 
 ```bash
-python3 ~/.codex/skills/spectacula/scripts/bootstrap_repo.py /path/to/project-repo
+~/.codex/skills/spectacula/scripts/spectacula bootstrap /path/to/project-repo
 ```
 
 If already inside the target repo:
 
 ```bash
-python3 ~/.codex/skills/spectacula/scripts/bootstrap_repo.py .
+~/.codex/skills/spectacula/scripts/spectacula bootstrap .
 ```
 
 This creates:
@@ -338,14 +358,15 @@ See [assets/repo-template/docs/spectacula/README.md](./assets/repo-template/docs
 
 ## Quick Start
 
-1. Run [scripts/bootstrap_repo.py](./scripts/bootstrap_repo.py) against the target repo.
+1. Run [scripts/spectacula](./scripts/spectacula) `bootstrap` against the target repo.
 2. Copy `docs/spectacula/templates/spec.template.md` in that target repo to `docs/spectacula/specs/<slug>.md`.
 3. Copy `docs/spectacula/templates/manifest.template.json` in that target repo to `docs/spectacula/specs/<slug>.json`.
 4. Use `spectacula` to clarify and draft the spec.
 5. Move the manifest to `ready/` once approved.
 6. Move the manifest to `inprogress/` when implementation starts.
-7. Run verification and final spec review.
-8. Move the manifest to `done/` when the implementation and review are complete.
+7. Run verification and final self-review.
+8. If the current run uses `spectacula++`, run the final vetting pass before closing.
+9. Move the manifest to `done/` only when the required review gates for the task are complete.
 
 ## Codex Invocation
 
@@ -434,6 +455,61 @@ $spectacula What is the status of <slug>?
 ```text
 $spectacula Implement docs/spectacula/specs/<slug>.md and keep the manifest current through ready, inprogress, and done.
 ```
+
+- Drive implementation with required final vetting:
+
+```text
+$spectacula++ Implement docs/spectacula/specs/<slug>.md and keep the manifest current through ready, inprogress, and done.
+```
+
+## Final Vetting Command
+
+When Spectacula is used for implementation work, you can choose the review strength on each call:
+
+- `$spectacula ...` keeps `review_policy.final_vetting = "off"`
+- `$spectacula++ ...` sets `review_policy.final_vetting = "required"`
+
+When the stricter alias is active, the recommended gate is:
+
+- native verification passes
+- `verification.spec_review` passes after a final self-review against the canonical spec
+- `verification.final_vetting` passes after the reviewer prompt is applied as a separate final check
+
+Render the final vetting prompt from the command wrapper:
+
+```bash
+~/.codex/skills/spectacula/scripts/spectacula review
+```
+
+For local development inside this repository:
+
+```bash
+./scripts/spectacula review
+```
+
+There is also a direct shorthand command for the stricter path:
+
+```bash
+~/.codex/skills/spectacula/scripts/spectacula++
+./scripts/spectacula++
+```
+
+If there is exactly one active manifest in `docs/spectacula/inprogress`, the command resolves it automatically. You can also target a specific slug or manifest path:
+
+```bash
+~/.codex/skills/spectacula/scripts/spectacula review my-spec
+~/.codex/skills/spectacula/scripts/spectacula review docs/spectacula/inprogress/my-spec.json
+```
+
+The command renders the reviewer prompt plus the active repo/spec/manifest context so Codex or Claude can apply it as the final vetting pass. A failed verdict should keep the work in `inprogress`, with `verification.final_vetting` and history updated from the review outcome.
+
+The built-in reviewer prompt is modeled after a PR merge gate, but adapted for local pre-PR use:
+
+- start with the local diff, not the docs
+- scale review depth as Quick, Standard, or Deep based on risk
+- keep the pass read-only
+- check correctness, boundaries, security, consistency, and entropy
+- block only on actionable, substantive issues
 
 ## Examples And Templates
 

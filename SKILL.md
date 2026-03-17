@@ -25,8 +25,20 @@ If the user asks for help, usage, examples, installation guidance, or types `spe
   - the most relevant install or upgrade note when asked
 - Prefer concrete command-style examples over abstract explanation.
 - Mention that the canonical Codex invocation is `$spectacula ...`.
+- Mention the stronger alias `$spectacula++ ...` for runs that require a final vetting pass before `done`.
 
 ## Run The Workflow
+
+Invocation aliases the skill should recognize:
+
+- `$spectacula ...` or `spectacula ...`: normal Spectacula run; set `review_policy.final_vetting = "off"` for this call unless the user explicitly overrides it
+- `$spectacula++ ...` or `spectacula++ ...`: stricter Spectacula run; set `review_policy.final_vetting = "required"` for this call
+
+When either alias is used:
+
+- strip the alias token from the working title or slug derivation
+- record the current choice in the active manifest as `review_policy.final_vetting`
+- treat the latest call as authoritative when resuming an existing manifest
 
 1. Frame the request
 - Identify the artifact type: product spec, system design, API/interface spec, workflow/process spec, migration plan, or decision memo.
@@ -80,6 +92,11 @@ If the user asks for help, usage, examples, installation guidance, or types `spe
 - Require an explicit self-check loop: implement, compare against the reference spec, fix gaps, then perform a final review against the same spec.
 - Run available verification gates before the final review: format, lint, typecheck, build, test, or equivalent project-native checks.
 - Fix verification failures before claiming completion unless the user explicitly accepts a blocked state.
+- Record the self-review result in `verification.spec_review`.
+- Treat `review_policy.final_vetting` as the per-call selector. If the latest invocation was `spectacula++`, require final vetting before `done`. If it was plain `spectacula`, do not require it.
+- When `review_policy.final_vetting = "required"`, look for [agents/spectacula-reviewer.md](./agents/spectacula-reviewer.md) or render the bundled prompt with [scripts/spectacula++](./scripts/spectacula++) or [scripts/spectacula](./scripts/spectacula) `review`, then apply that rubric as a final read-only, diff-first, PR-gate-style vetting pass after the normal implementation loop.
+- Record the final vetting verdict in `verification.final_vetting` and append a `final_vetting_passed` or `final_vetting_failed` history event to the manifest.
+- If the current run requires final vetting and it fails, keep the manifest in `inprogress` until the findings are addressed and the vetting pass is rerun.
 - Do not stop at "implementation done" if the result still misses required behavior from the reference spec.
 
 ## Audit And Upgrade Existing Specs

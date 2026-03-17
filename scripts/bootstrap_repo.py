@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 
 
-def parse_args() -> argparse.Namespace:
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Create docs/spectacula in a target repository from the Spectacula template."
     )
@@ -29,7 +29,7 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Overwrite existing template files in the target repo.",
     )
-    return parser.parse_args()
+    return parser.parse_args(argv)
 
 
 def copy_tree(src: Path, dest: Path, force: bool) -> list[str]:
@@ -57,8 +57,8 @@ def copy_tree(src: Path, dest: Path, force: bool) -> list[str]:
     return written
 
 
-def main() -> int:
-    args = parse_args()
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
     skill_root = Path(__file__).resolve().parent.parent
     source_root = skill_root / "assets" / "repo-template" / "docs" / "spectacula"
     if not source_root.is_dir():

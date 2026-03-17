@@ -34,7 +34,7 @@ Rules:
 | `specs` | Drafting, clarifying, or revising the spec before approval |
 | `ready` | Spec approved and waiting for implementation |
 | `inprogress` | Implementation or execution is active |
-| `done` | Implementation finished and reviewed against the reference spec |
+| `done` | Implementation finished and self-reviewed against the reference spec, plus final vetting when `review_policy.final_vetting` is `required` |
 
 ## Manifest Schema
 
@@ -64,6 +64,7 @@ Recommended fields:
 - `reference_examples`
 - `verification`
 - `implementation`
+- `review_policy`
 
 Recommended `verification` fields:
 
@@ -73,7 +74,12 @@ Recommended `verification` fields:
 - `build`
 - `tests`
 - `spec_review`
+- `final_vetting`
 - `notes`
+
+Recommended `review_policy` fields:
+
+- `final_vetting`: `required` or `off`
 
 Use status values such as:
 
@@ -107,6 +113,8 @@ Useful additional history events:
 - `spec_upgraded`
 - `upgrade_blocked`
 - `review_followup_needed`
+- `final_vetting_passed`
+- `final_vetting_failed`
 
 ## Example Manifest
 
@@ -124,6 +132,9 @@ Useful additional history events:
   "summary": "Implementation is active for orchestrator state and retry handling.",
   "next_action": "Finish reconciliation flow and run the validation matrix.",
   "blockers": [],
+  "review_policy": {
+    "final_vetting": "off"
+  },
   "resume_context": {
     "last_completed_step": "Implemented dispatch loop and claim tracking.",
     "pending_steps": [
@@ -148,7 +159,8 @@ Useful additional history events:
     "typecheck": "pending",
     "build": "pending",
     "tests": "partial",
-    "spec_review": "pending"
+    "spec_review": "pending",
+    "final_vetting": "pending"
   },
   "history": [
     {
@@ -180,12 +192,14 @@ Useful additional history events:
 
 - `specs -> ready`: move the manifest after approval; update `approved_at`, `summary`, and `next_action`.
 - `ready -> inprogress`: move the manifest when implementation begins; add implementation/resume context.
-- `inprogress -> done`: move the manifest after final implementation review against the reference spec; add verification results and `completed_at`.
+- `inprogress -> done`: move the manifest after final self-review against the reference spec and, when `review_policy.final_vetting = "required"`, a final vetting pass; add verification results and `completed_at`.
 - If the work is reopened, move the manifest back to the appropriate earlier stage instead of creating a duplicate.
 
 Best practice for `inprogress -> done`:
 
-- `done` should mean the implementation exists, the relevant verification gates were run, and the final review against the canonical spec is complete.
+- `done` should mean the implementation exists, the relevant verification gates were run, and `verification.spec_review` passed.
+- When `review_policy.final_vetting = "required"`, `done` also requires `verification.final_vetting` to pass.
+- When you want the assembled final vetting prompt and current context, prefer Spectacula's `scripts/spectacula++` or `scripts/spectacula review [<slug-or-manifest>]` command, then record the resulting verdict in the manifest.
 - If a verification gate cannot pass yet, keep the manifest in `inprogress` unless the user explicitly accepts a blocked or partial state and that decision is recorded in `verification.notes` and `history`.
 
 ## Interruption And Resume Rules

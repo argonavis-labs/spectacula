@@ -31,6 +31,7 @@ Recommended manifest fields:
 - `next_action`
 - `resume_context`
 - `history`
+- `review_policy`
 
 Recommended workflow:
 
@@ -39,4 +40,6 @@ Recommended workflow:
 3. Draft until approved
 4. Move the manifest to `ready/`
 5. Move the manifest to `inprogress/` when implementation starts
-6. Move the manifest to `done/` only after verification and final review against the spec
+6. Run verification and final self-review against the spec
+7. If the current Spectacula call is the stricter form (`spectacula++`), run the final vetting pass and record the result
+8. Move the manifest to `done/` only after the required review gates for the current task are complete

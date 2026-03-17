@@ -11,6 +11,9 @@
   "next_action": "Move manifest to inprogress and implement the API.",
   "blockers": [],
   "reference_examples": [],
+  "review_policy": {
+    "final_vetting": "off"
+  },
   "verification": {
     "format": "pending",
     "lint": "pending",
@@ -18,6 +21,7 @@
     "build": "pending",
     "tests": "pending",
     "spec_review": "pending",
+    "final_vetting": "pending",
     "notes": ""
   },
   "resume_context": {

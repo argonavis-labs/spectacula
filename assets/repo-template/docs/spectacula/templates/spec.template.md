@@ -47,6 +47,7 @@ Describe architecture, state, workflows, or interfaces.
 - [ ] <Implement feature or subsystem>
 - [ ] <Run verification gates>
 - [ ] <Final review against spec>
+- [ ] <Final vetting gate, when `spectacula++` / strict review mode is active>
 
 ## 9. Open Questions / Assumptions
 

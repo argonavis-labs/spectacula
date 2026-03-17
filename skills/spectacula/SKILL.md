@@ -12,6 +12,11 @@ It also supports two explicit review workflows:
 - `spec-audit` for reviewing existing specs against the current Spectacula quality bar
 - `spec-upgrade` for rewriting existing specs in place to meet that quality bar
 
+Invocation aliases:
+
+- `/spectacula:spectacula` or `spectacula` in the user request for the normal flow; record `review_policy.final_vetting = "off"` for the current run unless the user explicitly overrides it
+- `spectacula++` in the user request for the stricter flow that requires a final vetting pass before `done`; record `review_policy.final_vetting = "required"` for the current run
+
 ## Help Mode
 
 If the user asks for help, usage, examples, installation guidance, or types `/spectacula:spectacula help`:
@@ -49,7 +54,12 @@ If the user asks for help, usage, examples, installation guidance, or types `/sp
 
 5. Move into implementation when requested
 - Treat the approved spec as the reference contract.
-- Implement against it, re-read it, fix gaps, run verification gates, and finish with a final review against the same spec.
+- Implement against it, re-read it, fix gaps, and run verification gates.
+- Always finish with a final self-review against the same spec before moving to `done`.
+- Treat `review_policy.final_vetting` as the authoritative per-run selector. If the latest invocation uses the stricter alias (`spectacula++`), require final vetting before `done`. If it uses the normal alias, do not require it.
+- When `review_policy.final_vetting = "required"`, render the bundled reviewer prompt with `python3 "${CLAUDE_SKILL_DIR}/../../scripts/spectacula.py" review [<slug-or-manifest>]` or read `agents/spectacula-reviewer.md` directly, then apply that rubric as a final read-only vetting pass.
+- Record the verdict as `verification.final_vetting` and keep the manifest in `inprogress` if the vetting pass fails.
+- When working entirely inside Claude, use the `spectacula-reviewer` subagent or an agent team reviewer as the final vetting reviewer rather than reusing the main implementer's own judgment.
 
 6. Audit or upgrade specs when requested
 - For `spec-audit`, inspect one or more specs in `docs/spectacula/specs`, compare them against the current quality bar and supplied references, and produce structured findings without rewriting unless asked.
@@ -69,6 +79,7 @@ python3 "${CLAUDE_SKILL_DIR}/../../scripts/bootstrap_repo.py" .
 - Keep exactly one active JSON manifest at `docs/spectacula/specs`, `ready`, `inprogress`, or `done`.
 - Move only the manifest between stage directories. Keep the spec Markdown fixed in `docs/spectacula/specs`.
 - Preserve `summary`, `next_action`, `history`, `verification`, and `resume_context` so interrupted work can resume cleanly.
+- Treat `verification.spec_review` and `verification.final_vetting` as separate signals. `done` always requires `spec_review=passed`. If `review_policy.final_vetting = "required"`, also require `final_vetting=passed` before moving to `done`.
 
 ## Use Claude Subagents And Agent Teams
 

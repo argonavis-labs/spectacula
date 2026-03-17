@@ -1,4 +1,4 @@
 interface:
   display_name: "Spectacula"
-  short_description: "Write, audit, and upgrade implementation specs"
-  default_prompt: "Use $spectacula to turn a short idea into a full implementation-ready specification in docs/spectacula, or to audit and upgrade existing specs to the current quality bar."
+  short_description: "Write, implement, and rigorously review specs"
+  default_prompt: "Use $spectacula to turn a short idea into a full implementation-ready specification in docs/spectacula, or use $spectacula++ when implementation should require a final vetting pass before done."
